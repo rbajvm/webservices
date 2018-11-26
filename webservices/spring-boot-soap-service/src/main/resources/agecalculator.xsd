@@ -1,0 +1,36 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.ashok.com/xml/agecalculator"
+           targetNamespace="http://www.ashok.com/xml/agecalculator" elementFormDefault="qualified">
+
+    <xs:element name="AgeCalculatorRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="name" type="xs:string"/>
+                <xs:element name="gender" type="xs:string"/>
+                <xs:element name="dob" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="AgeCalculatorResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="DataList" type="tns:DataList"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="DataList">
+        <xs:sequence>
+            <xs:element name="ageinyear" type="xs:string"/>
+            <xs:element name="ageinmonths" type="xs:string"/>
+            <xs:element name="ageinweeks" type="xs:string"/>
+            <xs:element name="ageindays" type="xs:string"/>
+            <xs:element name="ageinhours" type="xs:string"/>
+            <xs:element name="ageinminutes" type="xs:string"/>
+            <xs:element name="ageinseconds" type="xs:string"/>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="minmajor" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+</xs:schema>

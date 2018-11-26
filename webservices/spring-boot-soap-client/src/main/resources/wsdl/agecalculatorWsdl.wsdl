@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://www.ashok.com/xml/agecalculator" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.ashok.com/xml/agecalculator" targetNamespace="http://www.ashok.com/xml/agecalculator">
+  <wsdl:types>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.ashok.com/xml/agecalculator">
+
+    <xs:element name="AgeCalculatorRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="name" type="xs:string"/>
+                <xs:element name="gender" type="xs:string"/>
+                <xs:element name="dob" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="AgeCalculatorResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="DataList" type="tns:DataList"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="DataList">
+        <xs:sequence>
+            <xs:element name="ageinyear" type="xs:string"/>
+            <xs:element name="ageinmonths" type="xs:string"/>
+            <xs:element name="ageinweeks" type="xs:string"/>
+            <xs:element name="ageindays" type="xs:string"/>
+            <xs:element name="ageinhours" type="xs:string"/>
+            <xs:element name="ageinminutes" type="xs:string"/>
+            <xs:element name="ageinseconds" type="xs:string"/>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="minmajor" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="AgeCalculatorResponse">
+    <wsdl:part element="tns:AgeCalculatorResponse" name="AgeCalculatorResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="AgeCalculatorRequest">
+    <wsdl:part element="tns:AgeCalculatorRequest" name="AgeCalculatorRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="AgecalculatorPort">
+    <wsdl:operation name="AgeCalculator">
+      <wsdl:input message="tns:AgeCalculatorRequest" name="AgeCalculatorRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:AgeCalculatorResponse" name="AgeCalculatorResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="AgecalculatorPortSoap11" type="tns:AgecalculatorPort">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="AgeCalculator">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="AgeCalculatorRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="AgeCalculatorResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="AgecalculatorPortService">
+    <wsdl:port binding="tns:AgecalculatorPortSoap11" name="AgecalculatorPortSoap11">
+      <soap:address location="http://localhost:8080/service/agecalculator"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
