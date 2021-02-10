@@ -1,0 +1,207 @@
+openapi: 3.0.0
+info:
+  title: EmployeeComm
+  version: '1.0'
+servers:
+  - url: 'http://localhost:3000'
+paths:
+  /rest/api/v1/client/communication/claimantid/:
+    parameters: []
+    get:
+      summary: Get User Info by User ID
+      tags: []
+      operationId: get-users-userId
+      description: Retrieve the information of the user with the matching user ID.
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: memberid
+          description: 'Member Identification Number '
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseEntity'
+              examples:
+                example-1:
+                  value:
+                    status: success/warn/error
+                    status_message: Successfully retrived count
+                    data:
+                      claimantId: ''
+    
+  /rest/api/v1/client/communication/unreadcount:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseEntity'
+              examples:
+                example-1:
+                  value:
+                    status: success/warn/error
+                    status_message: Successfully retrived count
+                    data:
+                      claimantid: ''
+                      unreadcount: ''
+      operationId: get-rest-api-v1-client-communication-unreadcount
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+            examples:
+              example-1:
+                value:
+                  status: success/warn/error
+                  status_message: Successfully retrived count
+                  data:
+                    claimantid: ''
+                    unreadcount: ''
+        description: ''
+      description: To get Unread count
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: claimantid
+          description: Claimant ID
+  /rest/api/v1/client/communication/unreadcount/all:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseEntity'
+              examples:
+                example-1:
+                  value:
+                    status: success/warn/error
+                    status_message: Successfully retrived all the claims count
+                    data:
+                      - cliamId: NNTN-01
+                        unreadcount: '23'
+                      - cliamId: NNTN-01
+                        unreadcount: '12'
+                      - cliamId: NNTN-01
+                        unreadcount: '3'
+                      - cliamId: NNTN-01
+                        unreadcount: '32'
+                      - cliamId: NNTN-01
+                        unreadcount: '1'
+      operationId: get-rest-api-v1-client-communication-unreadcount-all
+      description: Get all unread count of Cliam
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: claimantid
+          description: Climant ID
+  /rest/api/v1/summary:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-rest-api-v1-summary
+      description: To get Summary
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: claimanantid
+          description: Claimant ID
+        - schema:
+            type: string
+          in: query
+          name: claimid
+          description: Claim ID
+  /rest/api/v1/client/communication/detail/:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-rest-api-v1-client-communication-detail
+      description: To get communication detail
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: type
+          description: Communication type pdf/message/email
+        - schema:
+            type: string
+          in: query
+          name: commid
+          description: Communication ID
+        - schema:
+            type: string
+          in: query
+          name: filenetid
+          description: Filenet ID
+  /rest/api/v1/readmessage:
+    put:
+      summary: ''
+      operationId: put-rest-api-v1-readmessage
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseEntity'
+              examples:
+                example-1:
+                  value:
+                    status: success/warn/error
+                    status_message: Successfully updated communication status
+                    data: {}
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: claimantid
+          description: Claimant ID
+        - schema:
+            type: string
+          in: query
+          name: claimid
+          description: Claim ID
+        - schema:
+            type: string
+          in: query
+          name: commid
+          description: Communication ID
+      description: To notify read
+components:
+  schemas:
+    ResponseEntity:
+      title: ResponseEntity
+      x-examples:
+        example-1:
+          status: string
+          statusmessage: string
+          data: null
+      type: object
+      description: ''
+      properties:
+        status:
+          type: string
+        statusMessage:
+          type: string
+        data:
+          anyOf: []
+        ErrorMessage:
+          allOf: []
