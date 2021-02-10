@@ -160,6 +160,27 @@ paths:
           in: query
           name: filenetid
           description: Filenet ID
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResponseEntity'
+            examples:
+              example-1:
+                value:
+                  status: success/warn/error
+                  status_message: Successfully retrived all the Summary detail
+                  data:
+                    documentName: Claim received
+                    byteArray: ''
+              example-2:
+                value:
+                  status: success/warn/error
+                  status_message: Successfully retrived all the Summary detail
+                  data:
+                    emailSubject: Claim received
+                    emailReceivedTime: ''
+                    emailContent: html String
     parameters: []
   client/communication/readmessage:
     put:
@@ -194,7 +215,7 @@ paths:
           in: query
           name: commid
           description: Communication ID
-      description: To notify read
+      description: To update communication status read/unread
     parameters: []
   /client/communication/claimantid:
     get:
