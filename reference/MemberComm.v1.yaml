@@ -2,6 +2,7 @@ openapi: 3.0.0
 info:
   title: MemberComm
   version: '1.0'
+  description: ''
 servers:
   - url: 'http://localhost:3000'
 paths:
@@ -217,7 +218,7 @@ paths:
           description: Communication ID
       description: To update communication status read/unread
     parameters: []
-  /client/communication/claimantid:
+  client/communication/claimantid/:
     get:
       summary: Your GET endpoint
       tags: []
@@ -244,6 +245,7 @@ paths:
                   data:
                     gcsclaimantid: ''
         description: ''
+    parameters: []
 components:
   schemas:
     ResponseEntity:
