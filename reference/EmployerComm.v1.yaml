@@ -1,39 +1,11 @@
 openapi: 3.0.0
 info:
-  title: EmployeeComm
+  title: EmployerComm
   version: '1.0'
 servers:
   - url: 'http://localhost:3000'
 paths:
-  /rest/api/v1/client/communication/claimantid/:
-    parameters: []
-    get:
-      summary: Get User Info by User ID
-      tags: []
-      operationId: get-users-userId
-      description: Retrieve the information of the user with the matching user ID.
-      parameters:
-        - schema:
-            type: string
-          in: query
-          name: memberid
-          description: 'Member Identification Number '
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseEntity'
-              examples:
-                example-1:
-                  value:
-                    status: success/warn/error
-                    status_message: Successfully retrived count
-                    data:
-                      claimantId: ''
-    
-  /rest/api/v1/client/communication/unreadcount:
+  client/communication/unreadcount:
     get:
       summary: Your GET endpoint
       tags: []
@@ -52,7 +24,7 @@ paths:
                     data:
                       claimantid: ''
                       unreadcount: ''
-      operationId: get-rest-api-v1-client-communication-unreadcount
+      operationId: get-communication-unreadcount
       requestBody:
         content:
           application/json:
@@ -75,7 +47,8 @@ paths:
           in: query
           name: claimantid
           description: Claimant ID
-  /rest/api/v1/client/communication/unreadcount/all:
+    parameters: []
+  client/communication/unreadcount/all:
     get:
       summary: Your GET endpoint
       tags: []
@@ -102,7 +75,7 @@ paths:
                         unreadcount: '32'
                       - cliamId: NNTN-01
                         unreadcount: '1'
-      operationId: get-rest-api-v1-client-communication-unreadcount-all
+      operationId: get-communication-unreadcount-all
       description: Get all unread count of Cliam
       parameters:
         - schema:
@@ -110,12 +83,47 @@ paths:
           in: query
           name: claimantid
           description: Climant ID
-  /rest/api/v1/summary:
+    parameters: []
+  client/communication/summary:
     get:
       summary: Your GET endpoint
       tags: []
-      responses: {}
-      operationId: get-rest-api-v1-summary
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                example-1:
+                  value:
+                    status: success/warn/error
+                    status_message: Successfully retrived all the Summary detail
+                    data:
+                      claimantid: ''
+                      claimid: ''
+                      totalRead: 2
+                      totalUnread: 1
+                      communications:
+                        - communicationId: '001'
+                          status: READ
+                          subject: ''
+                          text: ''
+                          initialLines: claims sumbitted
+                          datetimesent: ''
+                          type: 'email, text, pdf'
+                          filenetId: '123456'
+                        - communicationId: '002'
+                          status: UNREAD
+                          subject: ''
+                          text: ''
+                          initialLines: claims sumbitted
+                          datetimesent: ''
+                          type: 'email, text, pdf'
+                          filenetId: '123456'
+      operationId: get-client-communication-summary
       description: To get Summary
       parameters:
         - schema:
@@ -128,7 +136,8 @@ paths:
           in: query
           name: claimid
           description: Claim ID
-  /rest/api/v1/client/communication/detail/:
+    parameters: []
+  client/communication/detail/:
     get:
       summary: Your GET endpoint
       tags: []
@@ -151,10 +160,11 @@ paths:
           in: query
           name: filenetid
           description: Filenet ID
-  /rest/api/v1/readmessage:
+    parameters: []
+  client/communication/readmessage:
     put:
       summary: ''
-      operationId: put-rest-api-v1-readmessage
+      operationId: put-client-communication-readmessage
       responses:
         '200':
           description: OK
@@ -185,6 +195,34 @@ paths:
           name: commid
           description: Communication ID
       description: To notify read
+    parameters: []
+  /client/communication/claimantid:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-client-communication-claimantid
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: memberid
+          description: Member ID
+      description: To get GCS cliamant id based on Member id
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+            examples:
+              example-1:
+                value:
+                  status: success/warn/error
+                  status_message: Successfully retrived count
+                  data:
+                    gcsclaimantid: ''
+        description: ''
 components:
   schemas:
     ResponseEntity:

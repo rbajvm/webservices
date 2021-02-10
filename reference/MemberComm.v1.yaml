@@ -5,184 +5,241 @@ info:
 servers:
   - url: 'http://localhost:3000'
 paths:
-  '/users/{userId}':
-    parameters:
-      - schema:
-          type: integer
-        name: userId
-        in: path
-        required: true
-        description: Id of an existing user.
+  client/communication/unreadcount:
     get:
-      summary: Get User Info by User ID
+      summary: Your GET endpoint
       tags: []
       responses:
         '200':
-          description: User Found
+          description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: '#/components/schemas/ResponseEntity'
               examples:
-                Get User Alice Smith:
+                example-1:
                   value:
-                    id: 142
-                    firstName: Alice
-                    lastName: Smith
-                    email: alice.smith@gmail.com
-                    dateOfBirth: '1997-10-31'
-                    emailVerified: true
-                    signUpDate: '2019-08-24'
-        '404':
-          description: User Not Found
-      operationId: get-users-userId
-      description: Retrieve the information of the user with the matching user ID.
-    patch:
-      summary: Update User Information
-      operationId: patch-users-userId
-      responses:
-        '200':
-          description: User Updated
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-              examples:
-                Updated User Rebecca Baker:
-                  value:
-                    id: 13
-                    firstName: Rebecca
-                    lastName: Baker
-                    email: rebecca@gmail.com
-                    dateOfBirth: '1985-10-02'
-                    emailVerified: false
-                    createDate: '2019-08-24'
-        '404':
-          description: User Not Found
-        '409':
-          description: Email Already Taken
-      description: Update the infromation of an existing user.
+                    status: success/warn/error
+                    status_message: Successfully retrived count
+                    data:
+                      claimantid: ''
+                      unreadcount: ''
+      operationId: get-communication-unreadcount
       requestBody:
         content:
           application/json:
             schema:
               type: object
-              properties:
-                firstName:
-                  type: string
-                lastName:
-                  type: string
-                email:
-                  type: string
-                  description: 'If a new email is given, the user''s email verified property will be set to false.'
-                dateOfBirth:
-                  type: string
+              properties: {}
             examples:
-              Update First Name:
+              example-1:
                 value:
-                  firstName: Rebecca
-              Update Email:
-                value:
-                  email: rebecca@gmail.com
-              Update Last Name & Date of Birth:
-                value:
-                  lastName: Baker
-                  dateOfBirth: '1985-10-02'
-        description: Patch user properties to update.
-  /user:
-    post:
-      summary: Create New User
-      operationId: post-user
+                  status: success/warn/error
+                  status_message: Successfully retrived count
+                  data:
+                    claimantid: ''
+                    unreadcount: ''
+        description: ''
+      description: To get Unread count
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: claimantid
+          description: Claimant ID
+    parameters: []
+  client/communication/unreadcount/all:
+    get:
+      summary: Your GET endpoint
+      tags: []
       responses:
         '200':
-          description: User Created
+          description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: '#/components/schemas/ResponseEntity'
               examples:
-                New User Bob Fellow:
+                example-1:
                   value:
-                    id: 12
-                    firstName: Bob
-                    lastName: Fellow
-                    email: bob.fellow@gmail.com
-                    dateOfBirth: '1996-08-24'
-                    emailVerified: false
-                    createDate: '2020-11-18'
-        '400':
-          description: Missing Required Information
-        '409':
-          description: Email Already Taken
+                    status: success/warn/error
+                    status_message: Successfully retrived all the claims count
+                    data:
+                      - cliamId: NNTN-01
+                        unreadcount: '23'
+                      - cliamId: NNTN-01
+                        unreadcount: '12'
+                      - cliamId: NNTN-01
+                        unreadcount: '3'
+                      - cliamId: NNTN-01
+                        unreadcount: '32'
+                      - cliamId: NNTN-01
+                        unreadcount: '1'
+      operationId: get-communication-unreadcount-all
+      description: Get all unread count of Cliam
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: claimantid
+          description: Climant ID
+    parameters: []
+  client/communication/summary:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                example-1:
+                  value:
+                    status: success/warn/error
+                    status_message: Successfully retrived all the Summary detail
+                    data:
+                      claimantid: ''
+                      claimid: ''
+                      totalRead: 2
+                      totalUnread: 1
+                      communications:
+                        - communicationId: '001'
+                          status: READ
+                          subject: ''
+                          text: ''
+                          initialLines: claims sumbitted
+                          datetimesent: ''
+                          type: 'email, text, pdf'
+                          filenetId: '123456'
+                        - communicationId: '002'
+                          status: UNREAD
+                          subject: ''
+                          text: ''
+                          initialLines: claims sumbitted
+                          datetimesent: ''
+                          type: 'email, text, pdf'
+                          filenetId: '123456'
+      operationId: get-client-communication-summary
+      description: To get Summary
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: claimanantid
+          description: Claimant ID
+        - schema:
+            type: string
+          in: query
+          name: claimid
+          description: Claim ID
+    parameters: []
+  client/communication/detail/:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-rest-api-v1-client-communication-detail
+      description: To get communication detail
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: type
+          description: Communication type pdf/message/email
+        - schema:
+            type: string
+          in: query
+          name: commid
+          description: Communication ID
+        - schema:
+            type: string
+          in: query
+          name: filenetid
+          description: Filenet ID
+    parameters: []
+  client/communication/readmessage:
+    put:
+      summary: ''
+      operationId: put-client-communication-readmessage
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseEntity'
+              examples:
+                example-1:
+                  value:
+                    status: success/warn/error
+                    status_message: Successfully updated communication status
+                    data: {}
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: claimantid
+          description: Claimant ID
+        - schema:
+            type: string
+          in: query
+          name: claimid
+          description: Claim ID
+        - schema:
+            type: string
+          in: query
+          name: commid
+          description: Communication ID
+      description: To notify read
+    parameters: []
+  /client/communication/claimantid:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-client-communication-claimantid
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: memberid
+          description: Member ID
+      description: To get GCS cliamant id based on Member id
       requestBody:
         content:
           application/json:
             schema:
               type: object
-              properties:
-                firstName:
-                  type: string
-                lastName:
-                  type: string
-                email:
-                  type: string
-                dateOfBirth:
-                  type: string
-                  format: date
-              required:
-                - firstName
-                - lastName
-                - email
-                - dateOfBirth
+              properties: {}
             examples:
-              Create User Bob Fellow:
+              example-1:
                 value:
-                  firstName: Bob
-                  lastName: Fellow
-                  email: bob.fellow@gmail.com
-                  dateOfBirth: '1996-08-24'
-        description: Post the necessary fields for the API to create a new user.
-      description: Create a new user.
+                  status: success/warn/error
+                  status_message: Successfully retrived count
+                  data:
+                    gcsclaimantid: ''
+        description: ''
 components:
   schemas:
-    User:
-      title: User
+    ResponseEntity:
+      title: ResponseEntity
+      x-examples:
+        example-1:
+          status: string
+          statusmessage: string
+          data: null
       type: object
       description: ''
-      x-examples:
-        Alice Smith:
-          id: 142
-          firstName: Alice
-          lastName: Smith
-          email: alice.smith@gmail.com
-          dateOfBirth: '1997-10-31'
-          emailVerified: true
-          signUpDate: '2019-08-24'
       properties:
-        id:
-          type: integer
-          description: Unique identifier for the given user.
-        firstName:
+        status:
           type: string
-        lastName:
+        statusMessage:
           type: string
-        email:
-          type: string
-          format: email
-        dateOfBirth:
-          type: string
-          format: date
-          example: '1997-10-31'
-        emailVerified:
-          type: boolean
-          description: Set to true if the user's email has been verified.
-        createDate:
-          type: string
-          format: date
-          description: The date that the user was created.
-      required:
-        - id
-        - firstName
-        - lastName
-        - email
-        - emailVerified
+        data:
+          anyOf: []
+        ErrorMessage:
+          allOf: []
